@@ -1,3 +1,4 @@
+# clean link.csv to get simple geometry information
 import pandas as pd
 import random
 import math

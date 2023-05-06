@@ -1,3 +1,4 @@
+#clean link.csv
 import pandas as pd
 import random
 import math
