@@ -2,9 +2,9 @@ import pandas as pd
 import random
 import math
 
-df = pd.read_csv("link_sample.csv")
+df = pd.read_csv("/data/oydata/Mapmatch_py/data/link_adj.csv")
 print(df.columns.values)
-f=df[['name','link_id','osm_way_id','from_node_id','to_node_id','dir_flag','length','lanes','free_speed','capacity','link_type_name','link_type','geometry','allowed_uses','from_biway','is_link','VDF_fftt1','VDF_cap1']]
+f=df[['name','link_id','osm_way_id','from_node_id','to_node_id','geometry']]
 
 # 显示每一列中的缺失值数量
 print(df.isnull().sum())
@@ -16,7 +16,7 @@ print(df.duplicated().sum())
 df.drop_duplicates(inplace=True)
 df = df.loc[~(df['allowed_uses'] != "auto")]
 
-with open('./sz/adj.mat','w+', encoding='utf-8') as f:
+with open('./data/adj.mat','w+', encoding='utf-8') as f:
     f.write('2\n')
     f.write('\n')
     for line in df.values:

@@ -3,7 +3,7 @@ import pandas as pd
 import random
 import math
 
-df = pd.read_csv("./sz/link.csv")
+df = pd.read_csv("./data/link.csv")
 
 # print(type(df))
 # 只输出列名
@@ -29,9 +29,11 @@ df = df.loc[~(df['is_link'].eq(0))]
 print(df.head(10))
 print(df.shape)
 
-with open('./sz/link_auto.csv','w+', encoding='utf-8') as f:
-    f.write('name,link_id,osm_way_id,from_node_id,to_node_id,geometry\n')
+with open('./data/link_auto.csv','w+', encoding='utf-8') as f:
+    f.write('link_id,from_node_id,to_node_id,geometry\n')
+    print("in file\n")
     for line in df.values:
         #str(line[0])：csv中第0列；+','+：csv两列之间保存到txt用逗号（，）隔开；'\n'：读取csv每行后在txt中换行
-        f.write((str(line[0])+','+str(line[1])+','+str(line[2])+','+str(line[3])+','+str(line[4])+','+str(line[12])+'\n'))
+        f.write((str(line[1])+','+str(line[3])+','+str(line[4])+','+str(line[12])+'\n'))
 
+print("finish")

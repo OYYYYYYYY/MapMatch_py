@@ -3,7 +3,7 @@ import pandas as pd
 import random
 import math
 
-df = pd.read_csv("node.csv")
+df = pd.read_csv("./datanode.csv")
 
 # 只输出列名
 print(df.columns.values)
@@ -28,7 +28,7 @@ print(df.shape)
 
 # df.drop(df[df.trip_distance == 0.00].index, inplace=True) 
 
-with open('node_sample.csv','w+', encoding='utf-8') as f:
+with open('./data/node_sample.csv','w+', encoding='utf-8') as f:
     f.write('node_id,osm_node_id,x_coord,y_coord,intersection_id,poi_id\n')
     for line in df.values:
         #str(line[0])：csv中第0列；+','+：csv两列之间保存到txt用逗号（，）隔开；'\n'：读取csv每行后在txt中换行

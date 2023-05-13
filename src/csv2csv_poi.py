@@ -4,7 +4,7 @@ import random
 import math
  
 # print(random.randint(0,9))
-df = pd.read_csv("poi.csv")
+df = pd.read_csv("./data/poi.csv")
 
 # print(type(df))
 # 只输出列名
@@ -41,7 +41,7 @@ print(df.shape)
 
 # df.drop(df[df.trip_distance == 0.00].index, inplace=True) 
 
-with open('poi_sample.csv','w+', encoding='utf-8') as f:
+with open('./data/poi_sample.csv','w+', encoding='utf-8') as f:
     f.write('poi_id,osm_way_id,geometry,centroid\n')
     # f.write((str(max(df.trip_distance))+'\t'+str(max(df.PULocationID))+'\t'+str(max(df.DOLocationID))+'\n'))
     for line in df.values:

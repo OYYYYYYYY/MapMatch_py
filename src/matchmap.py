@@ -10,11 +10,11 @@ from pandas import DataFrame
 from pandas import Series
 
 
-# data = pd.read_csv('./sz/TaxiData-Sample.csv',header = None)
+# data = pd.read_csv('./data/TaxiData-Sample.csv',header = None)
 # data.columns = ['VehicleNum','Time','lon','lat','OpenStatus','Speed']
 
 # 读取数据文件
-with open('./sz/TaxiData-Sample.csv', 'rt') as f:
+with open('./data/TaxiData-Sample.csv', 'rt') as f:
     reader = csv.DictReader(f)
     lons = []
     lats = []
@@ -39,19 +39,20 @@ days = []
 
 # 记录道路的总数
 
-with open('./sz/link_auto.csv','r') as fn:
+with open('./data/link_auto.csv','r') as fn:
     readern = csv.DictReader(fn)
     lane_id = []
     for rown in readern:
         lane_id.append(int(rown['link_id']))
 count = len(lane_id)
 
+# 道路总数
 print("The number of links:", count)
 
 
 print("\nLoad link data and record the id of links\n")
 
-with open("./sz/link_geo_temp3.csv", "r") as flr:
+with open("./data/link_geo_temp3.csv", "r") as flr:
     readerlr = csv.reader(flr)
     rowslr = list(readerlr)
 print("Read the geo file\n")
@@ -61,11 +62,11 @@ for i in range(len(times)):
     # 遍历路网link_geo_p文件中每一行(每一行都为一条路段)
     flag = 0
     for l in range(count):
-        with open("./sz/link_geo_lane_temp.csv", "w") as flw:
+        with open("./data/link_geo_lane_temp.csv", "w") as flw:
             writerlw = csv.writer(flw)
             row_lane = rowslr[l]
             writerlw.writerow(row_lane)
-        # with open("./sz/link_geo_temp3.csv", "r") as flr, open ("./sz/link_geo_lane.csv", "w") as flw:
+        # with open("./data/link_geo_temp3.csv", "r") as flr, open ("./data/link_geo_lane.csv", "w") as flw:
         #     # readerl = csv.reader(fl)
         #     # rowsl = list(readerl)
         #     # row_lane = rowsl[l]
@@ -77,21 +78,21 @@ for i in range(len(times)):
 
 
         # 将一行数据扩展成多行,并转换的二维数据
-        with open('./sz/link_geo_lane.csv', 'r') as infile, open('./sz/link_geo_lane_temp.csv', 'w') as outfile:
+        with open('./data/link_geo_lane.csv', 'r') as infile, open('./data/link_geo_lane_temp.csv', 'w') as outfile:
             stripped = (line.strip() for line in infile)
             lines = ([sent] for para in (line.split(",") for line in stripped if line) for sent in para)
             writer = csv.writer(outfile)
             writer.writerows(lines)
 
-        with open('./sz/link_geo_lane_temp.csv','r') as fr3:
+        with open('./data/link_geo_lane_temp.csv','r') as fr3:
             lines3 = fr3.readlines()
-        with open('./sz/link_lane_new.csv','w') as fw3:
+        with open('./data/link_lane_new.csv','w') as fw3:
             fw3.write('lon,lat\n')
             for line3 in lines3:
                 fw3.write(line3.replace(' ',','))
                     
         # 此时每一行表示该路段的一个坐标点(经度 纬度)
-        with open('./sz/link_lane_new.csv', 'r') as fla:
+        with open('./data/link_lane_new.csv', 'r') as fla:
             reader1 = csv.DictReader(fla)
             lane_lons = []
             lane_lats = []
@@ -117,7 +118,7 @@ for i in range(len(times)):
 
             
 
-with open('./sz/sz.tns','w') as fw:
+with open('./data/sz.tns','w') as fw:
     fw.write('3\n')
     # fw.write((str(len(segments))+' '+str(len(timeoday))+' '+str(len(days))+'\n'))
     for s in range(len(days)):

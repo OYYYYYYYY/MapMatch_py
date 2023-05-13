@@ -11,7 +11,7 @@ import osm2gmns as og
 # import os
 
 
-net = og.getNetFromFile('map_sz.osm',network_types=('auto',), POI=True, default_lanes=True, default_speed=True, default_capacity=True)
+net = og.getNetFromFile('./data/map_sz.osm',network_types=('auto',), POI=True, default_lanes=True, default_speed=True, default_capacity=True)
 og.consolidateComplexIntersections(net, auto_identify=True)
 og.connectPOIWithNet(net)
 og.outputNetToCSV(net, output_folder='')
