@@ -10,7 +10,7 @@ df = pd.read_csv("demand_2016.08.08_510100_.csv")
 print(df.columns.values)
 
 # df=df[['pickup_datetime','pickup_longitude','pickup_latitude','dropoff_longitude','dropoff_latitude']]
-f=df[['hour','latitude','longitude']]
+df=df[['hour','latitude','longitude']]
 # 结果  (行数,列数)
 print(df.shape)
 

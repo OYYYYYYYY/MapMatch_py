@@ -3,12 +3,12 @@ import pandas as pd
 import random
 import math
 
-df = pd.read_csv("./datanode.csv")
+df = pd.read_csv("./data/node.csv")
 
 # 只输出列名
 print(df.columns.values)
 
-f=df[['name','node_id','osm_node_id','osm_highway','zone_id','ctrl_type','node_type','activity_type','is_boundary','x_coord','y_coord','intersection_id','poi_id','notes']]
+df=df[['name','node_id','osm_node_id','osm_highway','zone_id','ctrl_type','node_type','activity_type','is_boundary','x_coord','y_coord','intersection_id','poi_id','notes']]
 # 结果  (行数,列数)
 print(df.shape)
 

@@ -4,7 +4,7 @@ import math
 
 df = pd.read_csv("/data/oydata/Mapmatch_py/data/link_adj.csv")
 print(df.columns.values)
-f=df[['name','link_id','osm_way_id','from_node_id','to_node_id','geometry']]
+df=df[['name','link_id','osm_way_id','from_node_id','to_node_id','geometry']]
 
 # 显示每一列中的缺失值数量
 print(df.isnull().sum())

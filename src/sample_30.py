@@ -4,7 +4,7 @@ import csv
 import math
 
 # 读取数据文件
-with open('./data/cd_taxi/cdc_0828.csv', 'rt') as f:
+with open('./data/cd_taxi/cdc_0829.csv', 'rt') as f:
     reader = csv.DictReader(f)
     lngs = []
     lats = []
@@ -25,7 +25,7 @@ with open('./data/cd_taxi/cdc_0828.csv', 'rt') as f:
             days.append(temp3)
 
 print("read data file")
-with open('./data/cd_taxi/sample_60s_d25.csv','w') as fw:
+with open('./data/cd_taxi/sample_60s_d26.csv','w') as fw:
     fw.write('lng,lat,time,day\n')
     for s in range(len(lngs)):
         fw.write((str(lngs[s])+','+str(lats[s])+','+str(times[s])+','+str(days[s])+'\n'))

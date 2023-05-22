@@ -6,7 +6,7 @@ import csv
 
 df = pd.read_csv("./data/link.csv")
 
-f=df[['name','link_id','osm_way_id','from_node_id','to_node_id','dir_flag','length','lanes','free_speed','capacity','link_type_name','link_type','geometry','allowed_uses','from_biway','is_link','VDF_fftt1','VDF_cap1']]
+df=df[['name','link_id','osm_way_id','from_node_id','to_node_id','dir_flag','length','lanes','free_speed','capacity','link_type_name','link_type','geometry','allowed_uses','from_biway','is_link','VDF_fftt1','VDF_cap1']]
 
 # 显示每一列中的缺失值数量
 print(df.isnull().sum())
@@ -44,17 +44,17 @@ with open('./data/link_geo_temp3.csv','w') as fw2:
     for line2 in lines2:
         fw2.write(line2.replace(', ',','))
 
-# 根据","对经纬度进行拆分,使得每一行只有一个经纬度
-with open('./data/link_geo_temp3.csv', 'r') as infile, open('./data/link_geo_temp4.csv', 'w') as outfile:
-    stripped = (line.strip() for line in infile)
-    lines = ([sent] for para in (line.split(",") for line in stripped if line) for sent in para)
-    writer = csv.writer(outfile)
-    writer.writerows(lines)
+# # 根据","对经纬度进行拆分,使得每一行只有一个经纬度
+# with open('./data/link_geo_temp3.csv', 'r') as infile, open('./data/link_geo_temp4.csv', 'w') as outfile:
+#     stripped = (line.strip() for line in infile)
+#     lines = ([sent] for para in (line.split(",") for line in stripped if line) for sent in para)
+#     writer = csv.writer(outfile)
+#     writer.writerows(lines)
 
-# 添加字符",",使得文件成为两列,一列为lon,一列为lat
-with open('./data/link_geo_temp4.csv','r') as fr3:
-    lines3 = fr3.readlines()
-with open('./data/link_geo_new.csv','w') as fw3:
-    fw3.write('lon,lat\n')
-    for line3 in lines3:
-        fw3.write(line3.replace(' ',','))
+# # 添加字符",",使得文件成为两列,一列为lon,一列为lat
+# with open('./data/link_geo_temp4.csv','r') as fr3:
+#     lines3 = fr3.readlines()
+# with open('./data/link_geo_new.csv','w') as fw3:
+#     fw3.write('lon,lat\n')
+#     for line3 in lines3:
+#         fw3.write(line3.replace(' ',','))

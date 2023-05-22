@@ -27,11 +27,11 @@ print("\nLoad link data and record the id of links\n")
 with open("./data/link_geo_temp3.csv", "r") as f1:
     reader1 = f1.readlines()
 
-with open("./data/link_geo_temp5.csv", "w") as f2:
+with open("./data/link_geo_temp4.csv", "w") as f2:
     for line1 in reader1:
         f2.write(line1.replace(' ',','))
 
-with open("./data/link_geo_temp5.csv", "r") as f3:
+with open("./data/link_geo_temp4.csv", "r") as f3:
     rows = csv.reader(f3, delimiter = ',')
     lng = []
     lng = [0.000000] * count

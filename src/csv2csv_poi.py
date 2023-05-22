@@ -10,7 +10,7 @@ df = pd.read_csv("./data/poi.csv")
 # 只输出列名
 print(df.columns.values)
 
-f=df[['name','poi_id','osm_way_id','osm_relation_id','building','amenity','leisure','way','geometry','centroid','area','area_ft2']]
+df=df[['name','poi_id','osm_way_id','osm_relation_id','building','amenity','leisure','way','geometry','centroid','area','area_ft2']]
 # 结果  (行数,列数)
 print(df.shape)
 

@@ -159,7 +159,7 @@ df = df.loc[~(df['segments'].eq(-1))]
 with open('./data/sz.tns','w') as ft:
     # ft.write('link_id,from_node_id,to_node_id,lng,lat\n')
     ft.write('3\n')
-    ft.write((str(len(lane_id))+' '+str(time_num)+' '+str(1)+'\n'))
+    ft.write((str(len(lane_id))+' '+str(int(time_num))+' '+str(1)+'\n'))
     for line in df.values:
         ft.write((str(line[0])+','+str(line[1])+','+str(line[2])+','+str(line[3])+'\n'))
 
