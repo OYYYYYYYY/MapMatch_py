@@ -3,7 +3,7 @@ import pandas as pd
 import random
 import math
 
-df = pd.read_csv("./data/link.csv")
+df = pd.read_csv("./data/cd_taxi/link.csv")
 
 # print(type(df))
 # 只输出列名
@@ -29,7 +29,7 @@ df = df.loc[~(df['is_link'].eq(0))]
 print(df.head(10))
 print(df.shape)
 
-with open('./data/link_auto.csv','w+', encoding='utf-8') as f:
+with open('./data/cd_taxi/link_auto.csv','w+', encoding='utf-8') as f:
     f.write('link_id,from_node_id,to_node_id,geometry\n')
     print("in file\n")
     for line in df.values:

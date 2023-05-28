@@ -6,7 +6,7 @@ import math
 
 # 记录道路的总数
 
-with open('./data/link_auto.csv','r') as f:
+with open('./data/cd_taxi/link_auto.csv','r') as f:
     reader = csv.DictReader(f)
     lane_id = []
     from_id = []
@@ -24,14 +24,14 @@ print("The number of links:", count)
 print("\nLoad link data and record the id of links\n")
 
 
-with open("./data/link_geo_temp3.csv", "r") as f1:
+with open("./data/cd_taxi/link_geo_temp3.csv", "r") as f1:
     reader1 = f1.readlines()
 
-with open("./data/link_geo_temp4.csv", "w") as f2:
+with open("./data/cd_taxi/link_geo_temp4.csv", "w") as f2:
     for line1 in reader1:
         f2.write(line1.replace(' ',','))
 
-with open("./data/link_geo_temp4.csv", "r") as f3:
+with open("./data/cd_taxi/link_geo_temp4.csv", "r") as f3:
     rows = csv.reader(f3, delimiter = ',')
     lng = []
     lng = [0.000000] * count
@@ -82,17 +82,17 @@ for ii in range(count):
 
 print("com_count=",com_count)
 
-with open('./data/link_single_temp.csv','w') as fw:
+with open('./data/cd_taxi/link_single_temp.csv','w') as fw:
     fw.write('link_id,from_node_id,to_node_id,lng,lat\n')
     for s in range(len(lane_id)):
-        fw.write((str(lane_id[s])+','+str(from_id[s])+','+str(to_id[s])+','+str(lng[s])+','+str(lat[s])+'\n'))
+        fw.write((str(int(lane_id[s]))+','+str(int(from_id[s]))+','+str(int(to_id[s]))+','+str(lng[s])+','+str(lat[s])+'\n'))
        
-df = pd.read_csv("./data/link_single_temp.csv")
+df = pd.read_csv("./data/cd_taxi/link_single_temp.csv")
 ff = df[['link_id','from_node_id','to_node_id','lng','lat']]
 df.drop_duplicates(inplace=True)
 df = df.loc[~(df['link_id'].eq(-1))]
 
-with open('./data/link_single.csv','w') as fww:
+with open('./data/cd_taxi/link_single.csv','w') as fww:
     fww.write('link_id,from_node_id,to_node_id,lng,lat\n')
     for line in df.values:
         fww.write((str(line[0])+','+str(line[1])+','+str(line[2])+','+str(line[3])+','+str(line[4])+'\n'))
