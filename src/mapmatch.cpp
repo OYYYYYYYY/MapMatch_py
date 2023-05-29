@@ -167,9 +167,9 @@ int main(int argc, char **argv){
     //         return 0;
     //     }
     // }
-    for(int i = 0; i < num_road; ++i){
-        cout<<Road_id[i]<<' ';
-    }
+    // for(int i = 0; i < num_road; ++i){
+    //     cout<<Road_id[i]<<' ';
+    // }
     //进行路网匹配
     uint num_match = 0;
     uint i, j;
