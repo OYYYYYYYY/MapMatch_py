@@ -120,15 +120,15 @@ int main(int argc, char **argv){
     // 创建数组存储道路信息
     double *Road_lng = nullptr;
     Road_lng = (double*)malloc(sizeof(double) * num_road);
-    memset(Road_lng, 0, sizeof(double) * num_road);
+    // memset(Road_lng, 0, sizeof(double) * num_road);
 
     double *Road_lat = nullptr;
     Road_lat = (double*)malloc(sizeof(double) * num_road);
-    memset(Road_lat, 0, sizeof(double) * num_road);
+    // memset(Road_lat, 0, sizeof(double) * num_road);
 
     uint *Road_id = nullptr;
     Road_id = (uint*)malloc(sizeof(uint) * num_road);
-    memset(Road_id, 0, sizeof(uint) * num_road);
+    // memset(Road_id, 0, sizeof(uint) * num_road);
 
     // 存储道路信息
     uint round_r = 0;

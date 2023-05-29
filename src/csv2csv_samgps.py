@@ -21,7 +21,7 @@ with open('./data/cd_taxi/cdc_0828.csv', 'rt') as f:
         if(temp2 % 60 == 0):
             lngs.append(temp0)
             lats.append(temp1)
-            times.append(temp2)
+            times.append(temp2 / 60)
             days.append(temp3)
 
 print("read data file")
