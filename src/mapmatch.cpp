@@ -88,12 +88,16 @@ int main(int argc, char **argv){
     // 创建数组存储张量的各列元素
     uint *segments = nullptr;
     segments = (uint*)malloc(sizeof(uint) * num_gps);
+    memset(segments, 0, sizeof(uint) * num_gps);
     uint *timeoday = nullptr;
     timeoday = (uint*)malloc(sizeof(uint) * num_gps);
+    memset(timeoday, 0, sizeof(uint) * num_gps);
     uint *days = nullptr;
     days = (uint*)malloc(sizeof(uint) * num_gps);
+    memset(days, 0, sizeof(uint) * num_gps);
     float *values = nullptr;
     values = (float*)malloc(sizeof(float) * num_gps);
+    memset(values, 0, sizeof(float) * num_gps);
 
     // 将segments数组统一赋值成10000
     for(uint s = 0; s < num_gps; ++s)
@@ -120,15 +124,15 @@ int main(int argc, char **argv){
     // 创建数组存储道路信息
     double *Road_lng = nullptr;
     Road_lng = (double*)malloc(sizeof(double) * num_road);
-    // memset(Road_lng, 0, sizeof(double) * num_road);
+    memset(Road_lng, 0, sizeof(double) * num_road);
 
     double *Road_lat = nullptr;
     Road_lat = (double*)malloc(sizeof(double) * num_road);
-    // memset(Road_lat, 0, sizeof(double) * num_road);
+    memset(Road_lat, 0, sizeof(double) * num_road);
 
     uint *Road_id = nullptr;
     Road_id = (uint*)malloc(sizeof(uint) * num_road);
-    // memset(Road_id, 0, sizeof(uint) * num_road);
+    memset(Road_id, 0, sizeof(uint) * num_road);
 
     // 存储道路信息
     uint round_r = 0;
@@ -147,16 +151,16 @@ int main(int argc, char **argv){
         round_r++;
     }
 
-    // 输出数组前五个元素验证是否正确
-    for(int i = 0; i < 5; ++i)
-        cout<<Road_lng[i]<<' ';
-    cout<<endl;
-    for(int i = 0; i < 5; ++i)
-        cout<<Road_lat[i]<<' ';
-    cout<<endl;
-    for(int i = 0; i < 5; ++i)
-        cout<<Road_id[i]<<' ';
-    cout<<endl;
+    // // 输出数组前五个元素验证是否正确
+    // for(int i = 0; i < 5; ++i)
+    //     cout<<Road_lng[i]<<' ';
+    // cout<<endl;
+    // for(int i = 0; i < 5; ++i)
+    //     cout<<Road_lat[i]<<' ';
+    // cout<<endl;
+    // for(int i = 0; i < 5; ++i)
+    //     cout<<Road_id[i]<<' ';
+    // cout<<endl;
 
     cout<<"finish load the road data\n";
 
@@ -187,9 +191,9 @@ int main(int argc, char **argv){
             }
         }
     }
-    for(uint s = 0; s < 100; ++s)
-        cout<<segments[s]<<' ';
-    cout<<endl;
+    // for(uint s = 0; s < 100; ++s)
+    //     cout<<segments[s]<<' ';
+    // cout<<endl;
 
     cout<<"num_match = "<<num_match<<endl;
     
@@ -208,17 +212,24 @@ int main(int argc, char **argv){
     uint num_day = 28;
     uint num_time = 24 * 60 * 60 / 60;
 
-    for(uint s = 0; s < 100; ++s)
-        cout<<segments[s]<<' ';
-    cout<<endl;
+    // for(uint s = 0; s < 100; ++s)
+    //     cout<<segments[s]<<' ';
+    // cout<<endl;
+
+    // make the begin index from 0 to 1
+    for(uint i = 0; i < num_match; ++i){
+        segments[i]++;
+        timeoday[i]++;
+        days[i]++;
+    }
     
     // write into file 
     FILE *fp = fopen(argv[3], "w");
     fprintf(fp, "3\n");
     fprintf(fp, "%u %u %u\n", round_r, num_time, num_day);
     for(uint i = 0; i < num_match; ++i){
-        if(segments[i] != 10000){
-            fprintf(fp, "%u %u %u %.0f\n", segments[i], timeoday[i], days[i], values[i]);
+        if(segments[i] != 10001){
+            fprintf(fp, "%u %u %u %.4f\n", segments[i], timeoday[i], days[i], values[i]);
         }
     }
     cout<<"finish write\n";

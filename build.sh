@@ -1,0 +1,1 @@
+g++ -o ./src/omain ./src/mapmatch.cpp
