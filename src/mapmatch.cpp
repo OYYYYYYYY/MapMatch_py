@@ -183,7 +183,7 @@ int main(int argc, char **argv){
             if((fabs(Data_lng[i] - Road_lng[j]) <= 0.0005) && (fabs(Data_lat[i] - Road_lat[j]) <= 0.0005)){
                 segments[num_match] = Road_id[j];
                 // cout<<segments[num_match]<<' '<<Road_id[j]<<endl;
-                timeoday[num_match] = Data_time[i];
+                timeoday[num_match] = Data_time[i] - 360;
                 days[num_match] = Data_day[i];
                 values[num_match] = 1;
                 num_match++;
@@ -210,7 +210,7 @@ int main(int argc, char **argv){
     }
     cout<<"The number of repetition is :"<<num_repetition<<endl;
     uint num_day = 28;
-    uint num_time = 24 * 60 * 60 / 60;
+    uint num_time = 18 * 60 * 60 / 60;
 
     // for(uint s = 0; s < 100; ++s)
     //     cout<<segments[s]<<' ';

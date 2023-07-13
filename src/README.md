@@ -9,6 +9,8 @@ clean_sinlink.py  对link_single.csv文件进行清洗,去除form_node_id和to_n
 
 clean_poi.py 对poi.csv进行清洗,只保留poi_id, centroid属性
 
+clean_data.py 对得到的张量数据进行清洗,原来的张量数据在时间片范围为00:00-23:59.实际范围应该为6:00-23:59
+
 csv2csv_geo.py  对link.csv提取其中的geometry属性,目前已弃用
 
 csv2csv_link.py  对link.csv进行清洗,保留属性link_id, from_node_id, to_node_id, geometry
