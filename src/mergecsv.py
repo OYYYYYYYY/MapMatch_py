@@ -4,9 +4,9 @@ import re
 
 def merge_csv():
     # 待处理的目录
-    input_path = r'/data/oydata/Mapmatch_py/data/cd_taxi/sample_data_60s/'
-    result_path = r'/data/oydata/Mapmatch_py/data/cd_taxi/sample_data_60s/'
-    result_name = r'chengdu08.csv'
+    input_path = r'/data/oydata/MapMatch_py/data/cd_taxi/sample_data_60s/'
+    result_path = r'/data/oydata/MapMatch_py/data/cd_taxi/sample_data_60s/'
+    result_name = r'trajectory_cdc08.csv'
     # 进入工作目录
     os.chdir(input_path)
     # 获取该目录下所有文件的名字

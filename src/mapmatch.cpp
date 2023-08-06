@@ -88,7 +88,7 @@ int main(int argc, char **argv){
     // 创建数组存储张量的各列元素
     uint *segments = nullptr;
     segments = (uint*)malloc(sizeof(uint) * num_gps);
-    memset(segments, 0, sizeof(uint) * num_gps);
+    memset(segments, 10000, sizeof(uint) * num_gps);
     uint *timeoday = nullptr;
     timeoday = (uint*)malloc(sizeof(uint) * num_gps);
     memset(timeoday, 0, sizeof(uint) * num_gps);
@@ -99,10 +99,7 @@ int main(int argc, char **argv){
     values = (float*)malloc(sizeof(float) * num_gps);
     memset(values, 0, sizeof(float) * num_gps);
 
-    // 将segments数组统一赋值成10000
-    for(uint s = 0; s < num_gps; ++s)
-        segments[s] = 10000;
-    // cout<<endl;
+
 
 
     cout<<"create arrays to store tensor values and index"<<endl;
@@ -151,17 +148,17 @@ int main(int argc, char **argv){
         round_r++;
     }
 
-    // // 输出数组前五个元素验证是否正确
-    // for(int i = 0; i < 5; ++i)
-    //     cout<<Road_lng[i]<<' ';
-    // cout<<endl;
-    // for(int i = 0; i < 5; ++i)
-    //     cout<<Road_lat[i]<<' ';
-    // cout<<endl;
-    // for(int i = 0; i < 5; ++i)
-    //     cout<<Road_id[i]<<' ';
-    // cout<<endl;
-
+    // 输出数组前五个元素验证是否正确
+    for(int i = 0; i < 5; ++i)
+        cout<<Road_lng[i]<<' ';
+    cout<<endl;
+    for(int i = 0; i < 5; ++i)
+        cout<<Road_lat[i]<<' ';
+    cout<<endl;
+    for(int i = 0; i < 5; ++i)
+        cout<<Road_id[i]<<' ';
+    cout<<endl;
+    cout<<"The number of road is: "<<round_r<<endl;
     cout<<"finish load the road data\n";
 
     // 判断segments数组赋值是否有错误
@@ -183,7 +180,7 @@ int main(int argc, char **argv){
             if((fabs(Data_lng[i] - Road_lng[j]) <= 0.0005) && (fabs(Data_lat[i] - Road_lat[j]) <= 0.0005)){
                 segments[num_match] = Road_id[j];
                 // cout<<segments[num_match]<<' '<<Road_id[j]<<endl;
-                timeoday[num_match] = Data_time[i] - 360;
+                timeoday[num_match] = Data_time[i];
                 days[num_match] = Data_day[i];
                 values[num_match] = 1;
                 num_match++;
@@ -219,7 +216,7 @@ int main(int argc, char **argv){
     // make the begin index from 0 to 1
     for(uint i = 0; i < num_match; ++i){
         segments[i]++;
-        timeoday[i]++;
+        timeoday[i] = (timeoday[i] / 60) - 359;
         days[i]++;
     }
     
