@@ -8,8 +8,28 @@
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cuda.h>
+#include <cuda_runtime.h>
+
 
 using namespace std;
+
+#define gridmax 32768
+
+__global__ void check_redun(uint num_match, uint* segments, uint* timeoday, uint* days, float* values, uint* num_redun){
+    uint i = blockIdx.x + threadIdx.x;
+    if(i < num_match){
+        for(int j = i + 1; j < num_match; ++j){
+            if((segments[i] == segments[j]) && (timeoday[i] == timeoday[j]) && (days[i] == days[j])){
+                segments[j] = 10000;
+                atomicAdd(&(values[j]), values[i]);
+                atomicAdd(&(num_redun[0]), 1);
+            }
+        }
+    }
+    printf("%u", num_redun[0]);
+
+}
 
 int main(int argc, char **argv){
     
@@ -66,11 +86,9 @@ int main(int argc, char **argv){
     }
 
     // 输出每个数组的前五个元素.检查是否正确
-    // for(uint i = 0; i < 5; i++){
-    //     cout<<Data_lng[i]<<' ';
-    // }
-    for(uint i = 0; i < 5; i++)
-        printf("%.5f ", Data_lng[i]);
+    for(uint i = 0; i < 5; i++){
+        cout<<Data_lng[i]<<' ';
+    }
     cout<<endl;
     for(uint i = 0; i < 5; i++){
         cout<<Data_lat[i]<<' ';
@@ -177,92 +195,11 @@ int main(int argc, char **argv){
     uint num_match = 0;
     uint i, j;
     // #pragma omp parallel for num_threads(16), private(i,j)
-    // for(i = 0; i < num_gps; ++i){
-    //     for(j = 0; j < num_road; ++j){
-    //         if((fabs(Data_lng[i] - Road_lng[j]) <= 0.001) || (fabs(Data_lat[i] - Road_lat[j]) <= 0.001)){
-    //         // if((fabs(Data_lng[i] - Road_lng[j]) <= 0.03 && fabs(Data_lat[i] - Road_lat[j]) <= 0.005 ) || (fabs(Data_lng[i] - Road_lng[j]) <= 0.005 && fabs(Data_lat[i] - Road_lat[j]) <= 0.03)){
-    //             segments[num_match] = Road_id[j];
-    //             // cout<<segments[num_match]<<' '<<Road_id[j]<<endl;
-    //             timeoday[num_match] = Data_time[i];
-    //             days[num_match] = Data_day[i];
-    //             values[num_match] = 1;
-    //             num_match++;
-    //             break;
-    //         }
-    //     }
-    // }
-
-    // int num_dis = 0;
-    // double distance[3] = {0, 0, 0};
-    // uint distance_index[3] = {10000, 10000, 10000};
-    // double distance_temp;
-    // double distance_min;
-    // int index_min;
-    // for(i = 0; i < num_gps; ++i){
-    //     distance[0] = 0;
-    //     distance[1] = 0;
-    //     distance[2] = 0;
-    //     num_dis = 0;
-    //     distance_min = 10000;
-    //     index_min = 10000;
-    //     distance_index[0] = 10000;
-    //     distance_index[1] = 10000;
-    //     distance_index[2] = 10000;
-    //     for(j = 0; j < num_road; ++j){
-    //         // if((fabs(Data_lng[i] - Road_lng[j]) <= 0.001) || (fabs(Data_lat[i] - Road_lat[j]) <= 0.001)){
-    //         if((fabs(Data_lng[i] - Road_lng[j]) <= 0.03 && fabs(Data_lat[i] - Road_lat[j]) <= 0.005 ) || (fabs(Data_lng[i] - Road_lng[j]) <= 0.005 && fabs(Data_lat[i] - Road_lat[j]) <= 0.03)){
-    //             distance_temp = sqrt(pow(Data_lng[i] - Road_lng[j], 2) + pow(Data_lat[i] - Road_lat[j], 2));
-    //             distance_index[num_dis] = j;
-    //             num_dis++;
-    //         }
-    //         distance[num_dis] = distance_temp;
-            
-    //         if(num_dis == 3 || j == num_road - 1){
-    //             for(int k = 0; k < num_dis; ++k){
-    //                 if(distance[k] < distance_min)
-    //                 distance_min = distance[k];
-    //                 index_min = distance_index[k];
-    //             }
-    //             segments[num_match] = Road_id[index_min];
-    //             timeoday[num_match] = Data_time[i];
-    //             days[num_match] = Data_day[i];
-    //             values[num_match] = 1;
-    //             num_match++;
-    //             break;
-    //         }
-    //     }
-    // }
-
-    int num_dis = 0;
-    double distance[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    uint distance_index[10] = {10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000};
-    double distance_temp;
-    double distance_min;
-    int index_min;
     for(i = 0; i < num_gps; ++i){
-        for(int s = 0; s < 10; s++){
-            distance[s] = 0;
-            distance_index[s] = 0;
-        }
-        num_dis = 0;
-        distance_min = 10000;
-        index_min = 10000;
         for(j = 0; j < num_road; ++j){
-            if((fabs(Data_lng[i] - Road_lng[j]) <= 0.001) || (fabs(Data_lat[i] - Road_lat[j]) <= 0.001)){
-            // if((fabs(Data_lng[i] - Road_lng[j]) <= 0.03 && fabs(Data_lat[i] - Road_lat[j]) <= 0.005 ) || (fabs(Data_lng[i] - Road_lng[j]) <= 0.005 && fabs(Data_lat[i] - Road_lat[j]) <= 0.03)){
-                distance_temp = sqrt(pow(Data_lng[i] - Road_lng[j], 2) + pow(Data_lat[i] - Road_lat[j], 2));
-                distance_index[num_dis] = j;
-                num_dis++;
-            }
-            distance[num_dis] = distance_temp;
-            
-            if(num_dis == 10 || j == num_road - 1){
-                for(int k = 0; k < num_dis; ++k){
-                    if(distance[k] < distance_min)
-                    distance_min = distance[k];
-                    index_min = distance_index[k];
-                }
-                segments[num_match] = Road_id[index_min];
+            if((fabs(Data_lng[i] - Road_lng[j]) <= 0.005) && (fabs(Data_lat[i] - Road_lat[j]) <= 0.005)){
+                segments[num_match] = Road_id[j];
+                // cout<<segments[num_match]<<' '<<Road_id[j]<<endl;
                 timeoday[num_match] = Data_time[i];
                 days[num_match] = Data_day[i];
                 values[num_match] = 1;
@@ -272,13 +209,10 @@ int main(int argc, char **argv){
         }
     }
 
-    // for(uint s = 0; s < 100; ++s)
-    //     cout<<segments[s]<<' ';
-    // cout<<endl;
-
     cout<<"num_match = "<<num_match<<endl;
     
     // uint num_repetition = 0;
+    uint re_num[1] = {0};
     // #pragma omp parallel for num_threads(16), private(i)
     // for(i = 0; i < num_match; ++i){
     //     for(j = i + 1; j < num_match; ++j){
@@ -289,13 +223,62 @@ int main(int argc, char **argv){
     //         }
     //     }
     // }
-    // cout<<"The number of repetition is :"<<num_repetition<<endl;
+    
+    uint *segments_d;
+    cudaMalloc((void**)&segments_d, sizeof(uint) * num_gps);
+    cudaMemcpy(segments_d, segments, sizeof(uint) * num_gps, cudaMemcpyHostToDevice);
+    uint *timeoday_d;
+    cudaMalloc((void**)&timeoday_d, sizeof(uint) * num_gps);
+    cudaMemcpy(timeoday_d, timeoday, sizeof(uint) * num_gps, cudaMemcpyHostToDevice);
+    uint *days_d;
+    cudaMalloc((void**)&days_d, sizeof(uint) * num_gps);
+    cudaMemcpy(days_d, days, sizeof(uint) * num_gps, cudaMemcpyHostToDevice);
+    float *values_d;
+    cudaMalloc((void**)&values_d, sizeof(float) * num_gps);
+    cudaMemcpy(values_d, values, sizeof(float) * num_gps, cudaMemcpyHostToDevice);
+    uint *re_num_d;
+    cudaMalloc((void**)&re_num_d, sizeof(uint) * 1);
+    cudaMemcpy(re_num_d, re_num, sizeof(uint) * 1, cudaMemcpyHostToDevice);
+    
+
+    // uint *segments_r = nullptr;
+    // segments_r = (uint*)malloc(sizeof(uint) * num_gps);
+    // memset(segments_r, 10000, sizeof(uint) * num_gps);
+    // uint *timeoday_r = nullptr;
+    // timeoday_r = (uint*)malloc(sizeof(uint) * num_gps);
+    // memset(timeoday_r, 0, sizeof(uint) * num_gps);
+    // uint *days_r = nullptr;
+    // days_r = (uint*)malloc(sizeof(uint) * num_gps);
+    // memset(days_r, 0, sizeof(uint) * num_gps);
+    // float *values_r = nullptr;
+    // values_r = (float*)malloc(sizeof(float) * num_gps);
+    // memset(values_r, 0, sizeof(float) * num_gps);
+    
+    cout<<"data memcpy to device"<<endl;
+    dim3 block(256);
+    dim3 grid;
+    if(num_match < gridmax)
+        grid.x = num_match;
+    else
+        grid.x = gridmax - 10000;
+    check_redun<<<grid, block>>>(num_match, segments_d, timeoday_d, days_d, values_d, re_num_d);
+
+    cout<<"finish gpu"<<endl;
+
+    cudaMemcpy(segments, segments_d, sizeof(uint) * num_gps, cudaMemcpyDeviceToHost);
+    cudaMemcpy(timeoday, timeoday_d, sizeof(uint) * num_gps, cudaMemcpyDeviceToHost);
+    cudaMemcpy(days, days_d, sizeof(uint) * num_gps, cudaMemcpyDeviceToHost);
+    cudaMemcpy(values, values_d, sizeof(float) * num_gps, cudaMemcpyDeviceToHost);
+    cudaMemcpy(re_num, re_num_d, sizeof(uint) * 1, cudaMemcpyDeviceToHost);
+
+
+    cout<<"The number of repetition is :"<<re_num[0]<<endl;
     uint num_day = 28;
     uint num_time = 18 * 60 * 60 / 60;
 
-    // // for(uint s = 0; s < 100; ++s)
-    // //     cout<<segments[s]<<' ';
-    // // cout<<endl;
+    // for(uint s = 0; s < 100; ++s)
+    //     cout<<segments[s]<<' ';
+    // cout<<endl;
 
     // make the begin index from 0 to 1
     for(uint i = 0; i < num_match; ++i){
@@ -306,12 +289,11 @@ int main(int argc, char **argv){
     
     // write into file 
     FILE *fp = fopen(argv[3], "w");
-    // fprintf(fp, "3\n");
-    // fprintf(fp, "%u %u %u\n", round_r, num_time, num_day);
-    fprintf(fp, "road,time,days,values\n");
+    fprintf(fp, "3\n");
+    fprintf(fp, "%u %u %u\n", round_r, num_time, num_day);
     for(uint i = 0; i < num_match; ++i){
-        if(segments[i] != 10000){
-            fprintf(fp, "%u,%u,%u,%.4f\n", segments[i], timeoday[i], days[i], values[i]);
+        if(segments[i] != 10001){
+            fprintf(fp, "%u %u %u %.4f\n", segments[i], timeoday[i], days[i], values[i]);
         }
     }
     cout<<"finish write\n";
@@ -327,6 +309,11 @@ int main(int argc, char **argv){
     free(timeoday);
     free(days);
     free(values);
+    cudaFree(segments_d);
+    cudaFree(timeoday_d);
+    cudaFree(days_d);
+    cudaFree(values_d);
+    cudaFree(re_num_d);
 
     return 0;
 }

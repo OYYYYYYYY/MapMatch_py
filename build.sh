@@ -1,1 +1,1 @@
-g++ -o ./src/omain ./src/mapmatch.cpp
+g++ -o ./src/omain ./src/mapmatch.cpp -fopenmp
