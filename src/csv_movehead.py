@@ -29,9 +29,6 @@ def main(argv):
     num = len(link_id)
 
     with open(output, 'w') as fww:
-        fww.write('3\n')
-        fww.write('5393 1080 25\n')
-        # fww.write('road,time,days,values\n')
         for i in range(num):
             fww.write((str(link_id[i])+' '+str(times[i])+' '+str(days[i])+' '+str(values[i])+'\n'))
 

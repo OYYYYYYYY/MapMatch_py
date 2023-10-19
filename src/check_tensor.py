@@ -12,7 +12,7 @@ def main(argv):
     # output_m2_sort = argv[4]
     # output_m2_clean = argv[5]
     # output_m3_sort = argv[6]
-    output = argv[2]
+    # output = argv[2]
 
     # resort according to mode 1
     # df = pd.read_csv(input)
@@ -25,28 +25,28 @@ def main(argv):
     # df_sorted.to_csv(output)
 
     # resort according to mode 3
-    df = pd.read_csv(input)
-    df_sorted = df.sort_values(by='days', ascending = True)
-    df_sorted.to_csv(output)
+    # df = pd.read_csv(input)
+    # df_sorted = df.sort_values(by='days', ascending = True)
+    # df_sorted.to_csv(output)
 
     # read tensor file
-    # with open(input, 'r') as f:
-    #     reader = csv.DictReader(f)
-    #     link_id = []
-    #     times = []
-    #     days = []
-    #     values = []
-    #     for row in reader:
-    #         temp0 = float(row['road'])
-    #         temp1 = float(row['time'])
-    #         temp2 = float(row['days'])
-    #         link_id.append(int(temp0))
-    #         times.append(int(temp1))
-    #         days.append(int(temp2))
-    #         values.append(float(row['values']))
+    with open(input, 'r') as f:
+        reader = csv.DictReader(f)
+        link_id = []
+        times = []
+        days = []
+        values = []
+        for row in reader:
+            temp0 = float(row['road'])
+            temp1 = float(row['time'])
+            temp2 = float(row['days'])
+            link_id.append(int(temp0))
+            times.append(int(temp1))
+            days.append(int(temp2))
+            values.append(float(row['values']))
 
-    # num = len(link_id)
-    # num_road = 7471
+    num = len(link_id)
+    num_road = 7471
     # num_time = 1080
     # num_day = 28
 
@@ -55,14 +55,14 @@ def main(argv):
     #         print("over")
 
     # record the number of lost value in each mode
-    # count1 = 0
+    count1 = 0
     # count2 = 0
     # count3 = 0
-    # for i in range(num_road):
-    #     if((i + 1) in link_id):
-    #         count1 = count1
-    #     else:
-    #         count1 = count1 + 1
+    for i in range(num_road):
+        if((i + 1) in link_id):
+            count1 = count1
+        else:
+            count1 = count1 + 1
   
     # for i in range(num_time):
     #     if((i + 1) in times):
@@ -77,7 +77,7 @@ def main(argv):
     #     else:
     #         count3 = count3 + 1
         
-    # print(count1)
+    print(count1)
     # print(count2)    
     # print(count3)
 

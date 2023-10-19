@@ -12,8 +12,8 @@ def main(argv):
     # # df_sorted = df.sort_values("poi_score")
     # df_sorted = df.sort_values(by='a', ascending = False)
     # df_sorted.to_csv(output)
-    for i in range(1,5):
-        print(i)
+    for i in range(5):
+        print(i + 1)
     print("finish")
 
 if __name__ == '__main__':

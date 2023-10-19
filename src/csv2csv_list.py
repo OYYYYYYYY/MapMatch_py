@@ -7,7 +7,6 @@ import sys
 def main(argv):
     # input tensor file .csv
     input = argv[1]
-    # output tensor file .csv
     output = argv[2]
 
     # read tensor file
@@ -27,13 +26,10 @@ def main(argv):
             values.append(float(row['values']))
 
     num = len(link_id)
-
     with open(output, 'w') as fww:
-        fww.write('3\n')
-        fww.write('5393 1080 25\n')
-        # fww.write('road,time,days,values\n')
+        fww.write('road,time,days,values\n')
         for i in range(num):
-            fww.write((str(link_id[i])+' '+str(times[i])+' '+str(days[i])+' '+str(values[i])+'\n'))
+            fww.write((str(link_id[i])+','+str(times[i])+','+str(days[i])+','+str(values[i])+'\n'))
 
     print("finish")
 
