@@ -44,62 +44,62 @@
 # print('所有文件处理完成！')
 
 ####################################################################################################
-# 换算时间、将原文件的date列进行分割，将日期转换为从0开始的索引，时间仍然为原本的存储方式，将所有的文件都存储在r2_data目录下
-import os
-import pandas as pd
+# # 换算时间、将原文件的date列进行分割，将日期转换为从0开始的索引，时间仍然为原本的存储方式，将所有的文件都存储在r2_data目录下
+# import os
+# import pandas as pd
 
 
-# def calculate_day(row):
-#     # 提取月份和日期
-#     month = int(row['date'].split('T')[0][5:7])
-#     day = int(row['date'].split('T')[0][8:10])
+# # def calculate_day(row):
+# #     # 提取月份和日期
+# #     month = int(row['date'].split('T')[0][5:7])
+# #     day = int(row['date'].split('T')[0][8:10])
     
-#     if (month == 8):
-#         return day - 10
-#     elif (month == 9):
-#         return day + 21
-#     elif (month == 10):
-#         return day + 51
+# #     if (month == 8):
+# #         return day - 10
+# #     elif (month == 9):
+# #         return day + 21
+# #     elif (month == 10):
+# #         return day + 51
 
-def process_csv_file(input_file, output_file):
-    # Read CSV file into pandas DataFrame
-    df = pd.read_csv(input_file)
+# def process_csv_file(input_file, output_file):
+#     # Read CSV file into pandas DataFrame
+#     df = pd.read_csv(input_file)
     
-    # Convert 'date' field to 'day' and 'time' fields
-    df['day'] = df['date'].apply(lambda x: int(x.split('T')[0][-2:]) - 10)  # Calculate day index from date
-    # df['day'] = df['date'].apply(lambda x: int(x.split('T')[0][-2:]) + 21)  # Calculate day index from date
-    # df['day'] = df['date'].apply(lambda x: int(x.split('T')[0][-2:]) + 51)  # Calculate day index from date
-    # df['day'] = df.apply(calculate_day, axis=1)
+#     # Convert 'date' field to 'day' and 'time' fields
+#     df['day'] = df['date'].apply(lambda x: int(x.split('T')[0][-2:]) - 10)  # Calculate day index from date
+#     # df['day'] = df['date'].apply(lambda x: int(x.split('T')[0][-2:]) + 21)  # Calculate day index from date
+#     # df['day'] = df['date'].apply(lambda x: int(x.split('T')[0][-2:]) + 51)  # Calculate day index from date
+#     # df['day'] = df.apply(calculate_day, axis=1)
    
-    df['time'] = df['date'].apply(lambda x: x.split('T')[1][:-1])  # Extract time without 'Z'
+#     df['time'] = df['date'].apply(lambda x: x.split('T')[1][:-1])  # Extract time without 'Z'
     
-    # Drop the original 'date' column if no longer needed
-    df.drop(columns=['date'], inplace=True)
+#     # Drop the original 'date' column if no longer needed
+#     df.drop(columns=['date'], inplace=True)
     
-    # Save modified DataFrame to new CSV file
-    df.to_csv(output_file, index=False)
+#     # Save modified DataFrame to new CSV file
+#     df.to_csv(output_file, index=False)
 
-if __name__ == "__main__":
-    input_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r1_data/2015-08'  # Replace with your input directory
-    output_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/2015-08'  # Replace with your output directory
+# if __name__ == "__main__":
+#     input_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r1_data/2015-08'  # Replace with your input directory
+#     output_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/2015-08'  # Replace with your output directory
     
-    # Ensure output directory exists
-    os.makedirs(output_directory, exist_ok=True)
+#     # Ensure output directory exists
+#     os.makedirs(output_directory, exist_ok=True)
     
-    # Process each CSV file in the input directory
-    for filename in os.listdir(input_directory):
-        if filename.endswith('.csv'):
-            input_file = os.path.join(input_directory, filename)
-            output_file = os.path.join(output_directory, filename)
+#     # Process each CSV file in the input directory
+#     for filename in os.listdir(input_directory):
+#         if filename.endswith('.csv'):
+#             input_file = os.path.join(input_directory, filename)
+#             output_file = os.path.join(output_directory, filename)
             
-            # Process and save each CSV file
-            process_csv_file(input_file, output_file)
-            print(f"Processed {filename} and saved as {output_file}")
+#             # Process and save each CSV file
+#             process_csv_file(input_file, output_file)
+#             print(f"Processed {filename} and saved as {output_file}")
 
-    print('所有文件处理完成！')
+#     print('所有文件处理完成！')
 
 ####################################################################################################
-
+# # 合并目录下所有的csv文件为一个大的文件。在此，现将三个月的文件分别合并，再合并为一个大文件。
 # import os
 # import pandas as pd
 
@@ -124,12 +124,17 @@ if __name__ == "__main__":
 #     print(f"Combined {len(csv_files)} CSV files into {output_file}")
 
 # if __name__ == "__main__":
-#     input_directory = '/data/oydata/MapMatch_py/data/week_sz_taxi/r1_data'  # Replace with your input directory
-#     output_file = '/data/oydata/MapMatch_py/data/week_sz_taxi/r1_data/traj.csv'  # Replace with your output directory
+#     # input_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/2015-10'  # Replace with your input directory
+#     # output_file = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/combine/traj-10.csv'  # Replace with your output directory
+
+#     input_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/combine'  # Replace with your input directory
+#     output_file = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/combine/traj.csv'  # Replace with your output directory
     
 #     # Merge all CSV files in the input directory
 #     merge_csv_files(input_directory, output_file)
 
+####################################################################################################
+# # 对合并后的数据集根据时间间隔进行采样
 # import pandas as pd
 
 # def convert_time_to_minutes(df, time_column):
