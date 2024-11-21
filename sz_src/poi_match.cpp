@@ -35,16 +35,6 @@ int main(int argc, char **argv){
     Data_lat = (double*)malloc(sizeof(double) * num_gps);
     memset(Data_lat, 0, sizeof(double) * num_gps);
 
-    int *Data_day = nullptr;
-    Data_day = (int*)malloc(sizeof(int) * num_gps);
-    memset(Data_day, 0, sizeof(int) * num_gps);
-
-    double *Data_time = nullptr;
-    Data_time = (double*)malloc(sizeof(double) * num_gps);
-    memset(Data_time, 0, sizeof(double) * num_gps);
-
-    
-
     // 存储轨迹数据
     uint round = 0;
     for (auto it = item.begin(); it != item.end(); it++){
@@ -68,7 +58,7 @@ int main(int argc, char **argv){
         
         round++;
     }
-
+    
     // 输出每个数组的前五个元素.检查是否正确
     // for(uint i = 0; i < 5; i++){
     //     cout<<Data_lng[i]<<' ';
@@ -105,18 +95,18 @@ int main(int argc, char **argv){
     float *values = nullptr;
     values = (float*)malloc(sizeof(float) * num_gps);
     memset(values, 0, sizeof(float) * num_gps);
-    // float *from_values = nullptr;
-    // from_values = (float*)malloc(sizeof(float) * num_gps);
-    // memset(from_values, 0, sizeof(float) * num_gps);
-    // float *to_values = nullptr;
-    // to_values = (float*)malloc(sizeof(float) * num_gps);
-    // memset(to_values, 0, sizeof(float) * num_gps);
-    // double *lng_values = nullptr;
-    // lng_values = (double*)malloc(sizeof(double) * num_gps);
-    // memset(lng_values, 0, sizeof(double) * num_gps);
-    // double *lat_values = nullptr;
-    // lat_values = (double*)malloc(sizeof(double) * num_gps);
-    // memset(lat_values, 0, sizeof(double) * num_gps);
+    float *from_values = nullptr;
+    from_values = (float*)malloc(sizeof(float) * num_gps);
+    memset(from_values, 0, sizeof(float) * num_gps);
+    float *to_values = nullptr;
+    to_values = (float*)malloc(sizeof(float) * num_gps);
+    memset(to_values, 0, sizeof(float) * num_gps);
+    double *lng_values = nullptr;
+    lng_values = (double*)malloc(sizeof(double) * num_gps);
+    memset(lng_values, 0, sizeof(double) * num_gps);
+    double *lat_values = nullptr;
+    lat_values = (double*)malloc(sizeof(double) * num_gps);
+    memset(lat_values, 0, sizeof(double) * num_gps);
 
 
 
@@ -151,13 +141,13 @@ int main(int argc, char **argv){
     Road_id = (double*)malloc(sizeof(double) * num_road);
     memset(Road_id, 0, sizeof(double) * num_road);
 
-    // double *Road_from = nullptr;
-    // Road_from = (double*)malloc(sizeof(double) * num_road);
-    // memset(Road_from, 0, sizeof(double) * num_road);
+    double *Road_from = nullptr;
+    Road_from = (double*)malloc(sizeof(double) * num_road);
+    memset(Road_from, 0, sizeof(double) * num_road);
 
-    // double *Road_to = nullptr;
-    // Road_to = (double*)malloc(sizeof(double) * num_road);
-    // memset(Road_to, 0, sizeof(double) * num_road);
+    double *Road_to = nullptr;
+    Road_to = (double*)malloc(sizeof(double) * num_road);
+    memset(Road_to, 0, sizeof(double) * num_road);
 
     // 存储道路信息
     uint round_r = 0;
@@ -167,11 +157,11 @@ int main(int argc, char **argv){
         getline(istr_r, str_r, ',');
         Road_id[round_r] = atoi(str_r.c_str());
 
-        // getline(istr_r, str_r, ',');
-        // Road_from[round_r] = atof(str_r.c_str());
+        getline(istr_r, str_r, ',');
+        Road_from[round_r] = atof(str_r.c_str());
 
-        // getline(istr_r, str_r, ',');
-        // Road_to[round_r] = atof(str_r.c_str());
+        getline(istr_r, str_r, ',');
+        Road_to[round_r] = atof(str_r.c_str());
 
         getline(istr_r, str_r, ',');
         Road_lng[round_r] = atof(str_r.c_str());
@@ -196,75 +186,10 @@ int main(int argc, char **argv){
     cout<<"The number of road is: "<<round_r<<endl;
     cout<<"finish load the road data\n";
 
-    // 判断segments数组赋值是否有错误
-    // for(uint i = 0; i < num_gps; ++i){
-    //     if(segments[i] != 10000){
-    //         cout<<"segments value error\n";
-    //         return 0;
-    //     }
-    // }
-    // for(int i = 0; i < num_road; ++i){
-    //     cout<<Road_id[i]<<' ';
-    // }
-    //进行路网匹配
     uint num_match = 0;
     uint i, j;
-    // #pragma omp parallel for num_threads(16), private(i,j)
-    // for(i = 0; i < num_gps; ++i){
-    //     for(j = 0; j < num_road; ++j){
-    //         if((fabs(Data_lng[i] - Road_lng[j]) <= 0.001) || (fabs(Data_lat[i] - Road_lat[j]) <= 0.001)){
-    //         // if((fabs(Data_lng[i] - Road_lng[j]) <= 0.03 && fabs(Data_lat[i] - Road_lat[j]) <= 0.005 ) || (fabs(Data_lng[i] - Road_lng[j]) <= 0.005 && fabs(Data_lat[i] - Road_lat[j]) <= 0.03)){
-    //             segments[num_match] = Road_id[j];
-    //             // cout<<segments[num_match]<<' '<<Road_id[j]<<endl;
-    //             timeoday[num_match] = Data_time[i];
-    //             days[num_match] = Data_day[i];
-    //             values[num_match] = 1;
-    //             num_match++;
-    //             break;
-    //         }
-    //     }
-    // }
 
-    // int num_dis = 0;
-    // double distance[3] = {0, 0, 0};
-    // uint distance_index[3] = {10000, 10000, 10000};
-    // double distance_temp;
-    // double distance_min;
-    // int index_min;
-    // for(i = 0; i < num_gps; ++i){
-    //     distance[0] = 0;
-    //     distance[1] = 0;
-    //     distance[2] = 0;
-    //     num_dis = 0;
-    //     distance_min = 10000;
-    //     index_min = 10000;
-    //     distance_index[0] = 10000;
-    //     distance_index[1] = 10000;
-    //     distance_index[2] = 10000;
-    //     for(j = 0; j < num_road; ++j){
-    //         // if((fabs(Data_lng[i] - Road_lng[j]) <= 0.001) || (fabs(Data_lat[i] - Road_lat[j]) <= 0.001)){
-    //         if((fabs(Data_lng[i] - Road_lng[j]) <= 0.03 && fabs(Data_lat[i] - Road_lat[j]) <= 0.005 ) || (fabs(Data_lng[i] - Road_lng[j]) <= 0.005 && fabs(Data_lat[i] - Road_lat[j]) <= 0.03)){
-    //             distance_temp = sqrt(pow(Data_lng[i] - Road_lng[j], 2) + pow(Data_lat[i] - Road_lat[j], 2));
-    //             distance_index[num_dis] = j;
-    //             num_dis++;
-    //         }
-    //         distance[num_dis] = distance_temp;
-            
-    //         if(num_dis == 3 || j == num_road - 1){
-    //             for(int k = 0; k < num_dis; ++k){
-    //                 if(distance[k] < distance_min)
-    //                 distance_min = distance[k];
-    //                 index_min = distance_index[k];
-    //             }
-    //             segments[num_match] = Road_id[index_min];
-    //             timeoday[num_match] = Data_time[i];
-    //             days[num_match] = Data_day[i];
-    //             values[num_match] = 1;
-    //             num_match++;
-    //             break;
-    //         }
-    //     }
-    // }
+
 
     int num_dis = 0;
     double distance[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -299,10 +224,10 @@ int main(int argc, char **argv){
                 timeoday[num_match] = Data_time[i];
                 days[num_match] = Data_day[i];
                 values[num_match] = 1;
-                // from_values[num_match] = Road_from[index_min];
-                // to_values[num_match] = Road_to[index_min];
-                // lng_values[num_match] = Road_lng[index_min];
-                // lat_values[num_match] = Road_lat[index_min];
+                from_values[num_match] = Road_from[index_min];
+                to_values[num_match] = Road_to[index_min];
+                lng_values[num_match] = Road_lng[index_min];
+                lat_values[num_match] = Road_lat[index_min];
 
                 num_match++;
                 break;
@@ -347,11 +272,10 @@ int main(int argc, char **argv){
     FILE *fp = fopen(argv[3], "w");
     // fprintf(fp, "3\n");
     // fprintf(fp, "%u %u %u\n", round_r, num_time, num_day);
-    fprintf(fp, "road,time,days,values\n");
+    fprintf(fp, "road,time,days,values,from_id,to_id,lng,lat\n");
     for(uint i = 0; i < num_match; ++i){
         if(segments[i] != 10000){
-            // fprintf(fp, "%u,%u,%u,%.4f,%.0f,%.0f,%.6f,%.6f\n", segments[i], timeoday[i], days[i], values[i], from_values[i], to_values[i], lng_values[i], lat_values[i]);
-            fprintf(fp, "%u,%u,%u,%.4f\n", segments[i], timeoday[i], days[i], values[i]);
+            fprintf(fp, "%u,%u,%u,%.4f,%.0f,%.0f,%.6f,%.6f\n", segments[i], timeoday[i], days[i], values[i], from_values[i], to_values[i], lng_values[i], lat_values[i]);
         }
     }
     cout<<"finish write\n";
@@ -363,16 +287,16 @@ int main(int argc, char **argv){
     free(Road_id);
     free(Road_lng);
     free(Road_lat);
-    // free(Road_from);
-    // free(Road_to);
+    free(Road_from);
+    free(Road_to);
     free(segments);
     free(timeoday);
     free(days);
     free(values);
-    // free(from_values);
-    // free(to_values);
-    // free(lng_values);
-    // free(lat_values);
+    free(from_values);
+    free(to_values);
+    free(lng_values);
+    free(lat_values);
 
     return 0;
 }

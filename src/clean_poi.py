@@ -13,7 +13,7 @@ import csv
 
 #     num = len(poi_id)
 
-df = pd.read_csv("./data/cd_taxi/poi.csv")
+df = pd.read_csv("/data/oydata/MapMatch_py/data/week_sz_taxi/poi.csv")
 
 df=df[['name','poi_id','osm_way_id','osm_relation_id','building','amenity','leisure','way','geometry','centroid','area','area_ft2']]
 
@@ -44,12 +44,12 @@ with open('./data/cd_taxi/poi_new.csv', 'w') as fw2:
     for line2 in lines2:
         fw2.write(line2.replace(' ',','))
 
-# df1 = pd.read_csv("./data/cd_taxi/poi_temp3.csv")
+df1 = pd.read_csv("./data/cd_taxi/poi_temp3.csv")
 
-# df1 = df1[['poi_id', 'centroid']]
+df1 = df1[['poi_id', 'centroid']]
 
-# with open ('./data/cd_taxi/poi_new.csv', 'w') as fn:
-#     fn.write('poi_id,lng,lat\n')
-#     for linen in df1.values:
-#         fn.write((str(linen[0])+','+str(linen[1])+','+str(linen[2])+'\n'))
+with open ('./data/cd_taxi/poi_new.csv', 'w') as fn:
+    fn.write('poi_id,lng,lat\n')
+    for linen in df1.values:
+        fn.write((str(linen[0])+','+str(linen[1])+','+str(linen[2])+'\n'))
 
