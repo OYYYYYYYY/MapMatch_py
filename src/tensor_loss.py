@@ -11,9 +11,12 @@ def main(argv):
     input = argv[1]
     output = argv[2]
     mode = int(argv[3])
-    num_road = 2235
-    num_time = 1440
-    num_day = 14
+    # num_road = 2235
+    # num_time = 1440
+    # num_day = 14
+    num_road = 7471
+    num_time = 144
+    num_day = 28
     # num_entry = 12360224
 
     # if(mode == 4):
@@ -264,7 +267,8 @@ def main(argv):
         # with open(output, 'w') as file:
         #     writer = csv.writer(file)
         #     writer.writerows(selected_data)
-    num_nnz = 30447
+    # num_nnz = 30447
+    num_nnz = 13092310
     # random little loss
     if(mode == 5):
         # randomlist = random.sample(range(1, int(num_nnz + 1)), int(num_nnz / 5))
@@ -311,6 +315,21 @@ def main(argv):
                 # else:
                     fww.write((str(link_id[i])+','+str(times[i])+','+str(days[i])+','+str(values[i])+'\n'))
 
+    if(mode == 6):
+        df = pd.read_csv(input)
+    
+        # 计算需要删除的行数
+        num_rows = len(df)
+        num_to_remove = int(num_rows * rate)
+    
+        # 随机选择要删除的行索引
+        rows_to_remove = random.sample(range(1, num_rows), num_to_remove)
+    
+        # 删除选定的行
+        df = df.drop(rows_to_remove)
+    
+        # 保存剩余的行的新的CSV文件
+        df.to_csv(output, index=False)
         
 
     print("finish")

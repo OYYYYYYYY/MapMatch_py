@@ -99,7 +99,7 @@
 #     print('所有文件处理完成！')
 
 ####################################################################################################
-# # 合并目录下所有的csv文件为一个大的文件。在此，现将三个月的文件分别合并，再合并为一个大文件。
+# 合并目录下所有的csv文件为一个大的文件。在此，现将三个月的文件分别合并，再合并为一个大文件。
 # import os
 # import pandas as pd
 
@@ -124,8 +124,8 @@
 #     print(f"Combined {len(csv_files)} CSV files into {output_file}")
 
 # if __name__ == "__main__":
-#     # input_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/2015-10'  # Replace with your input directory
-#     # output_file = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/combine/traj-10.csv'  # Replace with your output directory
+#     # input_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/2015-08'  # Replace with your input directory
+#     # output_file = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/combine/traj-08.csv'  # Replace with your output directory
 
 #     input_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/combine'  # Replace with your input directory
 #     output_file = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/combine/traj.csv'  # Replace with your output directory
@@ -134,44 +134,44 @@
 #     merge_csv_files(input_directory, output_file)
 
 ####################################################################################################
-# # 对合并后的数据集根据时间间隔进行采样
-# import pandas as pd
+# 对合并后的数据集的time列进行转换
+import pandas as pd
 
-# def convert_time_to_minutes(df, time_column):
-#     def time_to_minutes(time_str):
-#         # Split time_str into hh:mm:ss and milliseconds
-#         time_parts = time_str.split('.')
-#         hhmmss = time_parts[0]  # "hh:mm:ss"
+def convert_time_to_minutes(df, time_column):
+    def time_to_minutes(time_str):
+        # Split time_str into hh:mm:ss and milliseconds
+        time_parts = time_str.split('.')
+        hhmmss = time_parts[0]  # "hh:mm:ss"
         
-#         # Extract hh, mm, ss
-#         hh, mm, ss = map(int, hhmmss.split(':'))
+        # Extract hh, mm, ss
+        hh, mm, ss = map(int, hhmmss.split(':'))
         
-#         # Calculate total minutes
-#         total_minutes = hh * 60 + mm
+        # Calculate total minutes
+        total_minutes = hh * 60 + mm
         
-#         # Handle milliseconds part if present
-#         if len(time_parts) > 1:
-#             milliseconds = float(time_parts[1]) / 1000.0  # Convert milliseconds to fraction of minute
-#             total_minutes += milliseconds
+        # Handle milliseconds part if present
+        if len(time_parts) > 1:
+            milliseconds = float(time_parts[1]) / 1000.0  # Convert milliseconds to fraction of minute
+            total_minutes += milliseconds
         
-#         return total_minutes
+        return total_minutes
     
-#     df[time_column] = df[time_column].apply(time_to_minutes)
-#     return df
+    df[time_column] = df[time_column].apply(time_to_minutes)
+    return df
 
-# if __name__ == "__main__":
-#     input_file = '/data/oydata/MapMatch_py/data/week_sz_taxi/traj.csv'  # Replace with your input file path
-#     output_file = '/data/oydata/MapMatch_py/data/week_sz_taxi/traj_t.csv'  # Replace with your output file path
+if __name__ == "__main__":
+    input_file = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/combine/traj.csv'  # Replace with your input file path
+    output_file = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/r2_data/combine/traj_convert.csv'  # Replace with your output file path
     
-#     # Read CSV file into pandas DataFrame
-#     df = pd.read_csv(input_file)
+    # Read CSV file into pandas DataFrame
+    df = pd.read_csv(input_file)
     
-#     # Convert 'time' column to minutes
-#     df = convert_time_to_minutes(df, 'time')
+    # Convert 'time' column to minutes
+    df = convert_time_to_minutes(df, 'time')
     
-#     # Save modified DataFrame back to CSV
-#     df.to_csv(output_file, index=False)
-#     print(f"Converted 'time' column to minutes and saved to {output_file}")
+    # Save modified DataFrame back to CSV
+    df.to_csv(output_file, index=False)
+    print(f"Converted 'time' column to minutes and saved to {output_file}")
 
 
 

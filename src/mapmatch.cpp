@@ -59,11 +59,11 @@ int main(int argc, char **argv){
         Data_lat[round] = atof(str.c_str());
 
         getline(istr, str, ',');
-        Data_day[round] = atoi(str.c_str());
-
-        getline(istr, str, ',');
         // cout << str <<endl;
         Data_time[round] = atof(str.c_str());
+
+        getline(istr, str, ',');
+        Data_day[round] = atoi(str.c_str());
 
         
         round++;
@@ -266,58 +266,100 @@ int main(int argc, char **argv){
     //     }
     // }
 
-    int num_dis = 0;
-    double distance[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    uint distance_index[10] = {10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000};
-    double distance_temp;
+    // int num_dis = 0;
+    // double distance[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    // uint distance_index[10] = {10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000};
+    // double distance_temp;
+    // double distance_min;
+    // int index_min;
+    // for(i = 0; i < num_gps; ++i){
+    //     for(int s = 0; s < 10; s++){
+    //         // initialize the list 'distance[]' and 'distance_index[]'
+    //         distance[s] = 0;
+    //         distance_index[s] = 0;
+    //     }
+    //     num_dis = 0;
+    //     distance_min = 10000;
+    //     index_min = 10000;
+    //     for(j = 0; j < num_road; ++j){
+    //         // Determine whether the trajectory point is within the range of the road 
+    //         if((fabs(Data_lng[i] - Road_lng[j]) <= 0.001) || (fabs(Data_lat[i] - Road_lat[j]) <= 0.001)){
+    //         // if((fabs(Data_lng[i] - Road_lng[j]) <= 0.03 && fabs(Data_lat[i] - Road_lat[j]) <= 0.005 ) || (fabs(Data_lng[i] - Road_lng[j]) <= 0.005 && fabs(Data_lat[i] - Road_lat[j]) <= 0.03)){
+    //             // Calculate the distance between the trajectory point and the road :: calculate the 10 minimum distance between the trajectory point and the road
+    //             distance_temp = sqrt(pow(Data_lng[i] - Road_lng[j], 2) + pow(Data_lat[i] - Road_lat[j], 2));
+    //             distance_index[num_dis] = j;
+    //             num_dis++;
+    //         }
+    //         distance[num_dis] = distance_temp;
+            
+    //         if(num_dis == 10 || j == num_road - 1){
+    //             for(int k = 0; k < num_dis; ++k){
+    //                 if(distance[k] < distance_min)
+    //                 distance_min = distance[k];
+    //                 index_min = distance_index[k];
+    //             }
+    //             segments[num_match] = Road_id[index_min];
+    //             timeoday[num_match] = Data_time[i];
+    //             days[num_match] = Data_day[i];
+    //             values[num_match] = 1;
+    //             // from_values[num_match] = Road_from[index_min];
+    //             // to_values[num_match] = Road_to[index_min];
+    //             // lng_values[num_match] = Road_lng[index_min];
+    //             // lat_values[num_match] = Road_lat[index_min];
+
+    //             num_match++;
+    //             break;
+    //         }
+    //     }
+    // }
+    double dis[10];
+    int dis_idx[10];
     double distance_min;
     int index_min;
+
     for(i = 0; i < num_gps; ++i){
-        for(int s = 0; s < 10; s++){
-            distance[s] = 0;
-            distance_index[s] = 0;
+        // initialize the list dis[] and dis_idx[]
+        for(int s = 0; s < 10; ++s){
+            dis[s] = 1;
+            dis_idx[s] = 8000;
         }
-        num_dis = 0;
-        distance_min = 10000;
-        index_min = 10000;
+        uint num_dis = 0;
+        double dis_min = 2.0;
+        int dis_idx_min = 8000;
         for(j = 0; j < num_road; ++j){
-            if((fabs(Data_lng[i] - Road_lng[j]) <= 0.001) || (fabs(Data_lat[i] - Road_lat[j]) <= 0.001)){
-            // if((fabs(Data_lng[i] - Road_lng[j]) <= 0.03 && fabs(Data_lat[i] - Road_lat[j]) <= 0.005 ) || (fabs(Data_lng[i] - Road_lng[j]) <= 0.005 && fabs(Data_lat[i] - Road_lat[j]) <= 0.03)){
-                distance_temp = sqrt(pow(Data_lng[i] - Road_lng[j], 2) + pow(Data_lat[i] - Road_lat[j], 2));
-                distance_index[num_dis] = j;
-                num_dis++;
+            if((fabs(Data_lng[i] - Road_lng[j]) <= 0.0001) || (fabs(Data_lat[i] - Road_lat[j]) <= 0.0001)){
+            // if(fabs(Data_lng[i] - Road_lng[j]) <= 0.00005){
+            //     if(fabs(Data_lat[i] - Road_lat[j]) <= 0.00005){
+                    // Calculate the distance between the trajectory point and the road :: calculate the 10 minimum distance between the trajectory point and the road
+                    double distance_temp = sqrt(pow(Data_lng[i] - Road_lng[j], 2) + pow(Data_lat[i] - Road_lat[j], 2));
+                    dis_idx[num_dis] = j;
+                    dis[num_dis] = distance_temp;
+                    ++num_dis;
+                // }
             }
-            distance[num_dis] = distance_temp;
-            
-            if(num_dis == 10 || j == num_road - 1){
+            // find the min road and its index 
+            if(num_dis == 20 || j == num_road - 1){
                 for(int k = 0; k < num_dis; ++k){
-                    if(distance[k] < distance_min)
-                    distance_min = distance[k];
-                    index_min = distance_index[k];
+                    if(dis[k] < distance_min)
+                        distance_min = dis[k];
+                        index_min = dis_idx[k];
                 }
                 segments[num_match] = Road_id[index_min];
                 timeoday[num_match] = Data_time[i];
                 days[num_match] = Data_day[i];
                 values[num_match] = 1;
-                // from_values[num_match] = Road_from[index_min];
-                // to_values[num_match] = Road_to[index_min];
-                // lng_values[num_match] = Road_lng[index_min];
-                // lat_values[num_match] = Road_lat[index_min];
 
-                num_match++;
+                ++num_match;
                 break;
             }
+
         }
+
     }
-
-    // for(uint s = 0; s < 100; ++s)
-    //     cout<<segments[s]<<' ';
-    // cout<<endl;
-
     cout<<"num_match = "<<num_match<<endl;
     
     // uint num_repetition = 0;
-    // #pragma omp parallel for num_threads(16), private(i)
+    // // #pragma omp parallel for num_threads(16), private(i)
     // for(i = 0; i < num_match; ++i){
     //     for(j = i + 1; j < num_match; ++j){
     //         if((segments[i] == segments[j]) && (timeoday[i] == timeoday[j]) && (days[i] == days[j])){
@@ -328,7 +370,24 @@ int main(int argc, char **argv){
     //     }
     // }
     // cout<<"The number of repetition is :"<<num_repetition<<endl;
-    uint num_day = 14;
+    // uint num_repetition = 0;
+    // // #pragma omp parallel for num_threads(16) reduction(+:num_repetition)
+    // for (i = 0; i < num_match; ++i) {
+    //     // 内层循环从 i+1 开始，避免重复比较
+    //     for (j = i + 1; j < num_match; ++j) {
+    //         // 条件判断，确保符合要求
+    //         if (segments[i] == segments[j]){
+    //             if(timeoday[i] == timeoday[j]){
+    //                 if(days[i] == days[j]){
+    //                     segments[j] = 10000;
+    //                     values[i]++;
+    //                     num_repetition++;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    uint num_day = 28;
     // uint num_time = 24 * 60 * 60 / 60;
 
     // // for(uint s = 0; s < 100; ++s)
@@ -336,12 +395,12 @@ int main(int argc, char **argv){
     // // cout<<endl;
 
     // make the begin index from 0 to 1
-    for(uint i = 0; i < num_match; ++i){
-        // segments[i]++;
-        // timeoday[i] = (timeoday[i] / 60);
-        // timeoday[i] = (timeoday[i] / 60);
-        // days[i]++;
-    }
+    // for(uint i = 0; i < num_match; ++i){
+    //     // segments[i]++;
+    //     // timeoday[i] = (timeoday[i] / 60);
+    //     // timeoday[i] = (timeoday[i] / 60);
+    //     // days[i]++;
+    // }
     
     // write into file 
     FILE *fp = fopen(argv[3], "w");
