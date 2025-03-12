@@ -1,0 +1,9 @@
+python3 ./tensor_miss.py ../data/cd_taxi/paper2/tra_sample_5min_convert.csv ../data/cd_taxi/new_paper2/miss/mode2/cdc_m2_10.csv time 10
+python3 ./tensor_miss.py ../data/cd_taxi/paper2/tra_sample_5min_convert.csv ../data/cd_taxi/new_paper2/miss/mode2/cdc_m2_20.csv time 20
+python3 ./tensor_miss.py ../data/cd_taxi/paper2/tra_sample_5min_convert.csv ../data/cd_taxi/new_paper2/miss/mode2/cdc_m2_30.csv time 30
+python3 ./tensor_miss.py ../data/cd_taxi/paper2/tra_sample_5min_convert.csv ../data/cd_taxi/new_paper2/miss/mode2/cdc_m2_40.csv time 40
+python3 ./tensor_miss.py ../data/cd_taxi/paper2/tra_sample_5min_convert.csv ../data/cd_taxi/new_paper2/miss/mode2/cdc_m2_50.csv time 50
+python3 ./tensor_miss.py ../data/cd_taxi/paper2/tra_sample_5min_convert.csv ../data/cd_taxi/new_paper2/miss/mode2/cdc_m2_60.csv time 60
+python3 ./tensor_miss.py ../data/cd_taxi/paper2/tra_sample_5min_convert.csv ../data/cd_taxi/new_paper2/miss/mode2/cdc_m2_70.csv time 70
+python3 ./tensor_miss.py ../data/cd_taxi/paper2/tra_sample_5min_convert.csv ../data/cd_taxi/new_paper2/miss/mode2/cdc_m2_80.csv time 80
+python3 ./tensor_miss.py ../data/cd_taxi/paper2/tra_sample_5min_convert.csv ../data/cd_taxi/new_paper2/miss/mode2/cdc_m2_90.csv time 90

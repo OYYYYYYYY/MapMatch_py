@@ -15,7 +15,7 @@ def main(argv):
     # num_time = 1440
     # num_day = 14
     num_road = 7471
-    num_time = 144
+    num_time = 288
     num_day = 28
     # num_entry = 12360224
 
