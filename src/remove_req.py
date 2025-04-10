@@ -45,8 +45,8 @@ def process_directory(directory_path, output_dir):
             process_file(file_path, output_dir)
 
 # 设置目录路径
-input_directory = '/data/oydata/MapMatch_py/data/cd_taxi/paper2/sample_5min'
-output_directory = '/data/oydata/MapMatch_py/data/cd_taxi/paper2/req_sample_5min'
+input_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/after_mm'
+output_directory = '/data/oydata/MapMatch_py/data/large-scale_sz_taxi/after_req'
 
 # 处理目录下的所有CSV文件
 process_directory(input_directory, output_directory)

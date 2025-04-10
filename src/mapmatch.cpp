@@ -321,11 +321,11 @@ int main(int argc, char **argv){
         // initialize the list dis[] and dis_idx[]
         for(int s = 0; s < 10; ++s){
             dis[s] = 1;
-            dis_idx[s] = 8000;
+            dis_idx[s] = 10000;
         }
         uint num_dis = 0;
         double dis_min = 2.0;
-        int dis_idx_min = 8000;
+        int dis_idx_min = 10000;
         for(j = 0; j < num_road; ++j){
             if((fabs(Data_lng[i] - Road_lng[j]) <= 0.0001) || (fabs(Data_lat[i] - Road_lat[j]) <= 0.0001)){
             // if(fabs(Data_lng[i] - Road_lng[j]) <= 0.00005){
@@ -387,7 +387,7 @@ int main(int argc, char **argv){
     //         }
     //     }
     // }
-    uint num_day = 28;
+    uint num_day = 72;
     // uint num_time = 24 * 60 * 60 / 60;
 
     // // for(uint s = 0; s < 100; ++s)

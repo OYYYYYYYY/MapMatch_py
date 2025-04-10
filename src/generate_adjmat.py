@@ -13,9 +13,9 @@ def main(argv):
         from_id = []
         to_id = []
         for line in reader:
-            link_id.append(float(line['road']))
-            from_id.append(float(line['from_id']))
-            to_id.append(float(line['to_id']))
+            link_id.append(float(line['link_id']))
+            from_id.append(float(line['from_node_id']))
+            to_id.append(float(line['to_node_id']))
     
     num = len(link_id)
 
