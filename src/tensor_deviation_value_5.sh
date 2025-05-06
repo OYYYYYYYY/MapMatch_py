@@ -1,9 +1,0 @@
-# python3 ./tensor_deviation.py ../data/large-scale_sz_taxi/miss/random/sz_mr_30.csv ../data/large-scale_sz_taxi/deviation_value/convert/random/sz_mr_30_30_15.csv 0.3 15
-# python3 ./tensor_deviation.py ../data/large-scale_sz_taxi/miss/random/sz_mr_30.csv ../data/large-scale_sz_taxi/deviation_value/convert/random/sz_mr_30_30_25.csv 0.3 25
-# python3 ./tensor_deviation.py ../data/large-scale_sz_taxi/miss/random/sz_mr_30.csv ../data/large-scale_sz_taxi/deviation_value/convert/random/sz_mr_30_30_35.csv 0.3 35
-# python3 ./tensor_deviation.py ../data/large-scale_sz_taxi/miss/random/sz_mr_30.csv ../data/large-scale_sz_taxi/deviation_value/convert/random/sz_mr_30_30_45.csv 0.3 45
-
-python3 ./tensor_deviation.py ../data/large-scale_sz_taxi/miss/random/sz_mr_30.csv ../data/large-scale_sz_taxi/deviation_value/divide/random/sz_mr_30_30_15_e.csv ../data/large-scale_sz_taxi/deviation_value/divide/random/sz_mr_30_30_15_m.csv  0.3 15
-python3 ./tensor_deviation.py ../data/large-scale_sz_taxi/miss/random/sz_mr_30.csv ../data/large-scale_sz_taxi/deviation_value/divide/random/sz_mr_30_30_25_e.csv ../data/large-scale_sz_taxi/deviation_value/divide/random/sz_mr_30_30_15_m.csv  0.3 25
-python3 ./tensor_deviation.py ../data/large-scale_sz_taxi/miss/random/sz_mr_30.csv ../data/large-scale_sz_taxi/deviation_value/divide/random/sz_mr_30_30_35_e.csv ../data/large-scale_sz_taxi/deviation_value/divide/random/sz_mr_30_30_15_m.csv  0.3 35
-python3 ./tensor_deviation.py ../data/large-scale_sz_taxi/miss/random/sz_mr_30.csv ../data/large-scale_sz_taxi/deviation_value/divide/random/sz_mr_30_30_45_e.csv ../data/large-scale_sz_taxi/deviation_value/divide/random/sz_mr_30_30_15_m.csv  0.3 45
